@@ -22,6 +22,7 @@ app.MapPost("/producedata", async (string data) =>
 {
     var host = Environment.GetEnvironmentVariable("ADVERTISED_HOST");
     var port = Environment.GetEnvironmentVariable("ADVERTISED_PORT");
+    var topic = Environment.GetEnvironmentVariable("TOPIC");
 
     var config = new ProducerConfig
     {
@@ -32,7 +33,7 @@ app.MapPost("/producedata", async (string data) =>
 
     try
     {
-        var dr = await p.ProduceAsync("rtaTestTopic", new Message<Null, string> { Value = data });
+        var dr = await p.ProduceAsync(topic, new Message<Null, string> { Value = data });
         return $"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'";
     }
     catch (ProduceException<Null, string> e)

@@ -34,9 +34,23 @@ services:
         - ASPNETCORE_ENVIRONMENT=Development
         - ADVERTISED_HOST=kafkaserver
         - ADVERTISED_PORT=9092
+        - TOPIC=rtaTestTopic
     build:
         context: .
         dockerfile: rta.producer/Dockerfile
+    networks:
+        - rta-dev
+
+  rta.consumer:
+    image: rta.consumerone
+    container_name: rta.consumerone
+    environment:
+        - ADVERTISED_HOST=kafkaserver
+        - ADVERTISED_PORT=9092
+        - TOPIC=rtaTestTopic
+    build:
+        context: .
+        dockerfile: rta.consumerone/Dockerfile
     networks:
         - rta-dev
 
