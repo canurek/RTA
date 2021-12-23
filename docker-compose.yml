@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  rta.kafka:
+    image: spotify/kafka:latest
+    container_name: rta.kafka
+    hostname: kafkaserver
+    ports:
+        - 2181:2181
+        - 9092:9092
+    environment:
+        - ADVERTISED_HOST=kafkaserver
+        - ADVERTISED_PORT=9092
+        - AUTO_CREATE_TOPICS=true
+    command: >
+        bash -c
+        "(sleep 15s &&
+        /opt/kafka_2.11-0.10.1.0/bin/kafka-topics.sh
+        --create
+        --zookeeper
+        localhost:2181 --replication-factor 1 --partitions 1
+        --topic rtaTestTopic &) && (supervisord -n)"
+    networks:
+        - rta-dev
+
+  rta.producer:
+    image: rta.producer
+    container_name: rta.producer
+    hostname: rta.producer
+    ports:
+        - 8000:80
+        - 8011:443
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ADVERTISED_HOST=kafkaserver
+        - ADVERTISED_PORT=9092
+    build:
+        context: .
+        dockerfile: rta.producer/Dockerfile
+    networks:
+        - rta-dev
+
+networks:
+  rta-dev:
+    driver: bridge 
