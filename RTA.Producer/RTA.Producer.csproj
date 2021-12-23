@@ -13,5 +13,9 @@
 
   <ItemGroup>
     <None Remove="Confluent.Kafka" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
+using System.Text.Json;
 using Confluent.Kafka;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSwaggerGen();
@@ -13,12 +15,9 @@ var app = builder.Build();
 app.MapSwagger();
 app.UseSwaggerUI();
 
-app.MapGet("/", () => "Hello World!")
-   .WithName("Hello");
-
 app.UseHttpsRedirection();
 
-app.MapPost("/producedata", async (string data) =>
+app.MapPost("/producedata", async ([FromBody] Events events) =>
 {
     var host = Environment.GetEnvironmentVariable("ADVERTISED_HOST");
     var port = Environment.GetEnvironmentVariable("ADVERTISED_PORT");
@@ -33,7 +32,9 @@ app.MapPost("/producedata", async (string data) =>
 
     try
     {
-        var dr = await p.ProduceAsync(topic, new Message<Null, string> { Value = data });
+        var json = JsonSerializer.Serialize<Events>(events);
+
+        var dr = await p.ProduceAsync(topic, new Message<Null, string> { Value = json });
         return $"Delivered '{dr.Value}' to '{dr.TopicPartitionOffset}'";
     }
     catch (ProduceException<Null, string> e)
@@ -43,3 +44,5 @@ app.MapPost("/producedata", async (string data) =>
 });
 
 app.Run();
+
+
