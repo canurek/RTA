@@ -9,7 +9,8 @@ var topic = Environment.GetEnvironmentVariable("TOPIC");
 var config = new ConsumerConfig
 {
     BootstrapServers = $"{host}:{port}",
-    GroupId = Guid.NewGuid().ToString()
+    GroupId = Guid.NewGuid().ToString(),
+    AutoOffsetReset = AutoOffsetReset.Earliest
 };
 
 using (var c = new ConsumerBuilder<Ignore, string>(config).Build())
