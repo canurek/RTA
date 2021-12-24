@@ -14,8 +14,12 @@
   <ItemGroup>
     <None Remove="Confluent.Kafka" />
     <None Remove="Models\" />
+    <None Remove="EndpointDefinitions\" />
+    <None Remove="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="EndpointDefinitions\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

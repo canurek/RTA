@@ -4,7 +4,6 @@ using Confluent.Kafka;
 
 var host = Environment.GetEnvironmentVariable("ADVERTISED_HOST");
 var port = Environment.GetEnvironmentVariable("ADVERTISED_PORT");
-var topic = Environment.GetEnvironmentVariable("TOPIC");
 
 var config = new ConsumerConfig
 {
@@ -15,7 +14,7 @@ var config = new ConsumerConfig
 
 using (var c = new ConsumerBuilder<Ignore, string>(config).Build())
 {
-    c.Subscribe(topic);
+    c.Subscribe("rtaTestTopic");
 
     CancellationTokenSource cts = new();
 
