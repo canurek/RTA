@@ -24,7 +24,7 @@ adresi browserda açılarak; örnek test datası gönderimi sağlanabilir.
                 "isAuthenticated": true,
                 "provider": "b2c-internal",
                 "id": 231213,
-                "e-mail": "eser.ozvataf@setur.com"
+                "e-mail": "an@emailaddress.com"
             },
             "attributes": {
                 "hotelId": 4123,
