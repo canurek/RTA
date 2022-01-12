@@ -1,3 +1,5 @@
+https://canurek.com/basic-usage-of-kafka-in-an-assessment-project
+
 For running this project you have to run these Docker commands in the directory that includes the docker-compose file.
 
 - docker-compose build
